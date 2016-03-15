@@ -1,0 +1,15 @@
+<html>
+<body>
+{{#user}}
+{{#run}}
+<form action="/edit-message" method="post">
+    <input type="text" placeholder="{{gameName}}" name="newName"/>
+    <input type="number" placeholder="{{timeSeconds}}" name="newTime">
+    <input type="hidden" value="{{id}}" name="runId"/>
+    <button type="submit">Edit</button>
+</form>
+{{/run}}
+
+{/user}}
+</body>
+</html>

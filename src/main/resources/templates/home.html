@@ -1,0 +1,35 @@
+<html>
+<body>
+{{^user}}
+<form action="login" method="post">
+    <input type="text" placeholder="Enter your username" name="username" required>
+    <input type="password" placeholder="Password" name="password" required>
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+
+
+{{#user}}
+
+Welcome, {{name}}!
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<br><br>
+
+<form action="/add-run" method="post">
+    <input type="text" placeholder="Game Name" name="gameName">
+    <input type="number" placeholder="Time in seconds" name="timeSeconds">
+</form>
+{{/user}}
+
+<ol>
+    {{#runs}}
+    <li>{{gameName}} in {{timeSeconds}} seconds by {{#user}}{{name}}{{/user}} {{#user}} <form action="/delete-run" method="post"><input type="hidden" name="runId" value="{{id}}">
+        <button type="submit">Delete</button></form>
+        <a href="/edit-run?runId={{#run}}{{id}}{{/run}}">Edit</a></li>
+    {{/user}}
+    {{/runs}}
+</ol>
+</body>
+</html>
