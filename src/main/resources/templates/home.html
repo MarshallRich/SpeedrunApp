@@ -29,6 +29,14 @@ Welcome, {{name}}!
         <button type="submit">Delete</button></form>
         <a href="/edit-run?runId={{#run}}{{id}}{{/run}}">Edit</a></li>
     {{/user}}
+
+    {{#showNext}}
+    <a href="/?page={{nextPage}}">Next</a>
+    {{/showNext}}
+
+    {{#showPrevious}}
+    <a href="/?page={{previousPage}}">Previous</a>
+    {{/showPrevious}}.1
     {{/runs}}
 </ol>
 </body>

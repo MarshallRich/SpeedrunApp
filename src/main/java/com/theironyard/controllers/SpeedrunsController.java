@@ -6,6 +6,8 @@ import com.theironyard.services.RunRepository;
 import com.theironyard.services.UserRespository;
 import com.theironyard.utils.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,15 +28,22 @@ public class SpeedrunsController {
     RunRepository runs;
 
     @RequestMapping(path="/", method = RequestMethod.GET)
-    public String home (HttpSession session, Model model) {
+    public String home (HttpSession session, Model model, Integer page) {
+        page = (page == null) ? 0 : page;
+        PageRequest pr = new PageRequest(page, 10);
+        Page<Run> r;
         String username = (String) session.getAttribute("username");
         User user = users.findFirstByName(username);
         if (user !=null) {
             model.addAttribute("user", users.findFirstByName(username));
         }
-        else {
-            model.addAttribute("runs", runs.findAll());
-        }
+
+        r = runs.findAll(pr);
+        model.addAttribute("runs", r);
+        model.addAttribute("nextPage", page+1);
+        model.addAttribute("showNext", r.hasNext());
+        model.addAttribute("previousPage", page-1);
+        model.addAttribute("showPrevious", r.hasPrevious());
 
         return "home";
     }
